@@ -1,0 +1,3 @@
+# Ignorer tous les fichiers dans le sous-dossier node_modules
+node_modules/
+db/

@@ -1,0 +1,70 @@
+doctype html
+html
+  head
+    title= title
+
+    meta(charset='utf-8')
+    meta(content='IE=edge', http-equiv='X-UA-Compatible')
+    meta(content='width=device-width, initial-scale=1', name='viewport')
+    meta(content='Dorian BAGUR', name='author')
+
+    link(rel='stylesheet', href='bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='resources/signin.css')
+    link(rel='stylesheet', href='resources/webapp.css')
+
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+    script
+      :coffee
+        $().ready ->
+          console.log 'ready'
+          $('#login').submit (e) ->
+            user =
+              username: $('#login-username').val()
+              password: $('#login-password').val()
+              rememberMe: $('#remember-me').is(":checked")
+            console.log 'user', user
+            e.preventDefault()
+            $.post "/Connexion", user, (data) ->
+              console.log 'data', data, 'json'
+              if data.signedin
+                $('#login').hide()
+                $('#welcome').text('Bienvenue ' + data.username)
+                $('#comment').text('Vos informations personnelles')
+                $('#lastname').text(data.lastname)
+                $('#firstname').text(data.firstname)
+                $('#email').text(data.email)
+              else
+                $('#message').text(data.message)
+  body
+    div(class='container')
+      div#account
+        h1#welcome
+        h2#comment
+        p#lastname
+        p#firstname
+        p#email
+      form#login.form-signin(action='/connexion', method='post', role='form')
+        h2.form-signin-heading Authentifiez-vous
+        label.sr-only(for='login-username')  Identifiant
+        input#login-username.form-control(
+          type='text'
+          name='username'
+          placeholder='Identifiant'
+          value=username
+          required
+          autofocus
+        )
+        label.sr-only(for='login-password') Mot de passe
+        input#login-password.form-control(
+          type='password'
+          name='password'
+          placeholder='Mot de passe'
+          value=password
+          required
+        )
+        div#message
+        div(class='checkbox')
+          label.checkbox
+            input#remember-me(type='checkbox', name='rememberMe')
+            | Se souvenir de moi
+        button(class='btn btn-lg btn-primary btn-block', type='submit') Se connecter
