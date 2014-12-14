@@ -28,7 +28,7 @@
       secret: '123456789'
       resave: false
       saveUninitialized: true
-      cookie: maxAge: 3600000
+      cookie: maxAge: 60000
 
     if process.env.NODE_ENV is "production"
       app.set "trust proxy", 1
@@ -47,33 +47,9 @@
 
     app.use serveStatic("#{__dirname}/../public")
 
-    app.use '/', require('../routes/index')
-    app.use '/Accueil', require('../routes/accueil')
-    app.use '/Connexion', require('../routes/connexion')
+    app.use '/', require('../routes/index');
 
     app.use serveIndex("#{__dirname}/../public")
     app.use errorHandler() if process.env.NODE_ENV is "development"
-
-#### Initiliaze database
-
-    ###db = require '../lib/db'
-
-    client = db "#{__dirname}/../db"
-    client.users.set 'dorianb',
-      lastname: 'Bagur'
-      firstname: 'Dorian'
-      email: 'dorian@ethylocle.com'
-      password: '1234'
-    , (err) ->
-      return next err if err
-      client.users.set 'maoqiaoz',
-        lastname: 'Zhou'
-        firstname: 'Maoqiao'
-        email: 'maoqiao@ethylocle.com'
-        password: '4321'
-      , (err) ->
-        return next err if err###
-
-####
 
     module.exports = app

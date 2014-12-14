@@ -15,6 +15,7 @@
             [_, username, key] = data.key.split ':'
             user.username ?= username
             user[key] ?= data.value if user.username is username
+            #console.log "Username: " + user.username + " key: " + key + " value: " + user[key]
           .on 'error', (err) ->
             callback err
           .on 'end', ->
@@ -24,6 +25,26 @@
             continue if k is 'username'
             type: 'put'
             key: "users:#{username}:#{k}"
+            value: v
+          db.batch ops, (err) ->
+            callback err
+        getByEmail: (email, callback) ->
+          user = {}
+          db.createReadStream
+            gt: "users_by_email:#{email}:"
+          .on 'data', (data) ->
+            [_, email, key] = data.key.split ':'
+            user.email ?= email
+            user[key] ?= data.value if user.email is email
+          .on 'error', (err) ->
+            callback err
+          .on 'end', ->
+            callback null, user
+        setByEmail: (email, user, callback) ->
+          ops = for k, v of user
+            continue if k is 'email'
+            type: 'put'
+            key: "users_by_email:#{email}:#{k}"
             value: v
           db.batch ops, (err) ->
             callback err

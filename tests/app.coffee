@@ -24,7 +24,7 @@ describe 'app', () ->
   it "should be listening at localhost:#{port}", (done) ->
     headers = defaultGetOptions '/'
     http.get headers, (res) ->
-      res.statusCode.should.eql 302
+      res.statusCode.should.eql 200
       done()
 
   defaultGetOptions = (path) ->
