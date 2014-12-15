@@ -1,6 +1,6 @@
 # Node.js project using express Framework
 
-This is the GROUP3 project.
+This is the GROUP3 project (Dorian BAGUR, Najlaa SEDKI and Maoqiao ZHOU).
 We used coffeeScript as programmation language and MarkDown to document our code.
 
 ## Functionalities
@@ -9,32 +9,36 @@ We used coffeeScript as programmation language and MarkDown to document our code
 * validation server and client
 * import/export in csv and json
 
-There will be only one url for all screens.
+There is only one url for all screens.
 
-### Import/export scripts
-Create 2 commands `import` and `export`. Each commands take 2 options "--help" and "--format".
-For a simple argument parse, you may use [minimist]. For a more complex parser, you may use [parameters].
-
-#### Import
-
+## Install
+Use this command to install locally all the dependencies needed:
 ```
-./bin/import --help
-import [--help] [--format {name}] input
-Introduction message
---help          Print this message
---format {name} One of csv(default) or json
-input           Imported file
+npm install
 ```
 
-Import must implement the "stream.writable" class inside a module './lib/import'. Here is an example on how to use the import module:
+## Test
+Two tests are provided, execute them using the following command:
+```
+npm test
+```
+
+## Database structure
+
+## Import script
+A script is provided to import json and csv data in database. Use the following commands to import data:
 
 ```
-import = require './lib/import'
-db = require './lib/db'
-client = db './db'
-fs
-.createReadStream './sample.csv'
-.pipe import client, format: 'csv'
+node ./bin/import --format csv sample.csv
+node ./bin/import --format json sample.json
+```
+
+# Export script
+A script is provided to export data store in database to json and csv files. Use the following commands to export data:
+
+```
+node ./bin/export --format csv sample.csv
+node ./bin/export --format json sample.json
 ```
 
 #### Export
@@ -56,16 +60,4 @@ db = require './lib/db'
 client = db './db'
 export client, format: 'csv'
 .pipe fs.createReadableStream './sample.csv'
-```
-
-## Install
-Use this command to install locally all the dependencies needed:
-```
-npm install
-```
-
-## Test
-Two tests are provided, execute them using the following command:
-```
-npm test
 ```

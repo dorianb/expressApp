@@ -1,5 +1,3 @@
-# Test for app server
-
 http = require 'http'
 should = require 'should'
 app  = require "../lib/app"

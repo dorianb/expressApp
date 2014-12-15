@@ -1,5 +1,3 @@
-# Test for database
-
 rimraf = require 'rimraf'
 should = require 'should'
 db = require '../lib/db'

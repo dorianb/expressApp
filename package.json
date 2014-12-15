@@ -2,9 +2,6 @@
   "name": "expressApp",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/start"
-  },
   "author": "Dorian BAGUR",
   "dependencies": {
     "coffee-script": "latest",
@@ -21,13 +18,18 @@
     "level": "latest",
     "rimraf": "latest",
     "stylus": "latest",
-    "nib": "latest"
+    "nib": "latest",
+    "minimist": "latest",
+    "csv-parse": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
     "should": "latest"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register tests"
+    "start": "node ./bin/start",
+    "import": "node ./bin/import",
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register tests",
+    "export": "node ./bin/export"
   }
 }

@@ -81,6 +81,7 @@ html
                 $('#lastname').text(data.user.lastname)
                 $('#firstname').text(data.user.firstname)
                 $('#email').text(data.user.email)
+                $('#login-message').text('')
 
           $('#signup').submit (e) ->
             e.preventDefault()
@@ -106,6 +107,7 @@ html
                   $('#lastname').text(data.user.lastname)
                   $('#firstname').text(data.user.firstname)
                   $('#email').text(data.user.email)
+                  $('#signup-message').text('')
             else
               $('#signup-message').text('Confirmation du mot de passe incorrecte')
   body
