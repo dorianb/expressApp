@@ -7,9 +7,17 @@ We used coffeeScript as programmation language and MarkDown to document our code
 * provide a login formular accepting: username and email
 * provide a sign up formular requiring: username, email, password, re-password, firstname, lastname
 * validation server and client
-* import/export in csv and json
+* import in csv and json
+* Export has not been implemented yet
 
 There is only one url for all screens.
+
+## Layout
+
+/.git /.gitignore /bin/start /bin/import /bin/export /lib/app.coffee.md /lib/db.coffee.md, /lib/import.coffee.md, /lib/export.coffee.md /package.json (name, version, dependencies, ...) /public /LICENSE /README.md /tests/db.coffee /tests/app.coffee /tests/import.coffee /views /routes
+
+## LevelDB schema
+User namespace key: "users:#{username}:#{property}:" properties: "lastname", "firstname", "email" and "password"
 
 ## Install
 Use this command to install locally all the dependencies needed:
@@ -18,12 +26,16 @@ npm install
 ```
 
 ## Test
-Two tests are provided, execute them using the following command:
+Several tests are provided, execute them using the following command:
 ```
 npm test
 ```
 
-## Database structure
+## Launch server
+Execute the following command for launching server:
+```
+npm start
+```
 
 ## Import script
 A script is provided to import json and csv data in database. Use the following commands to import data:
@@ -31,33 +43,4 @@ A script is provided to import json and csv data in database. Use the following 
 ```
 node ./bin/import --format csv sample.csv
 node ./bin/import --format json sample.json
-```
-
-# Export script
-A script is provided to export data store in database to json and csv files. Use the following commands to export data:
-
-```
-node ./bin/export --format csv sample.csv
-node ./bin/export --format json sample.json
-```
-
-#### Export
-
-```
-./bin/export --help
-export [--help] [--format {name}] output
-Introduction message
---help          Print this message
---format {name} One of csv(default) or json
-output          Exported file
-```
-
-Export must implement the "stream.readable" class inside a module './lib/export'. Here is an example on how to use the export module:
-
-```
-export = require './lib/export'
-db = require './lib/db'
-client = db './db'
-export client, format: 'csv'
-.pipe fs.createReadableStream './sample.csv'
 ```

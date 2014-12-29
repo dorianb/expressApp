@@ -14,43 +14,49 @@ describe 'import', ->
     fs
     .createReadStream "#{__dirname}/../sample.csv"
     .on 'end', () ->
-      client.users.get 'dorianb', (err, user) ->
+      login = 'dorian@ethylocle.com'
+      password = '1234'
+      client.users.get login, (err, user) ->
         return next err if err
-        user.username.should.eql 'dorianb'
-        user.lastname.should.eql 'Bagur'
-        user.firstname.should.eql 'Dorian'
-        user.email.should.eql 'dorian@ethylocle.com'
-        user.password.should.eql '1234'
-        client.users.get 'maoqiaoz', (err, user) ->
-          return next err if err
-          user.username.should.eql 'maoqiaoz'
-          user.lastname.should.eql 'Zhou'
-          user.firstname.should.eql 'Maoqiao'
-          user.email.should.eql 'maoqiao@ethylocle.com'
-          user.password.should.eql '1234'
+        assertion = user.username is login and user.password is password
+        if assertion
+          assertion.should.eql true
           client.close()
           next()
-    .pipe importStream client, format: 'csv'
+        else
+          assertion.should.eql false
+          client.users.getByEmail login, (err, userByEmail) ->
+            return next err if err
+            client.users.get userByEmail.username, (err, user) ->
+              return next err if err
+              assertion = user.email is login and user.password is password
+              assertion.should.eql true
+              client.close()
+              next()
+    .pipe importStream client, format: 'csv', objectMode: true
 
   it 'Import sample.json', (next) ->
     client = db "#{__dirname}/../db/tmp"
     fs
     .createReadStream "#{__dirname}/../sample.json"
     .on 'end', () ->
-      client.users.get 'dorianb', (err, user) ->
+      login = 'dorian@ethylocle.com'
+      password = '1234'
+      client.users.get login, (err, user) ->
         return next err if err
-        user.username.should.eql 'dorianb'
-        user.lastname.should.eql 'Bagur'
-        user.firstname.should.eql 'Dorian'
-        user.email.should.eql 'dorian@ethylocle.com'
-        user.password.should.eql '1234'
-        client.users.get 'maoqiaoz', (err, user) ->
-          return next err if err
-          user.username.should.eql 'maoqiaoz'
-          user.lastname.should.eql 'Zhou'
-          user.firstname.should.eql 'Maoqiao'
-          user.email.should.eql 'maoqiao@ethylocle.com'
-          user.password.should.eql '1234'
+        assertion = user.username is login and user.password is password
+        if assertion
+          assertion.should.eql true
           client.close()
           next()
-    .pipe importStream client, format: 'json'
+        else
+          assertion.should.eql false
+          client.users.getByEmail login, (err, userByEmail) ->
+            return next err if err
+            client.users.get userByEmail.username, (err, user) ->
+              return next err if err
+              assertion = user.email is login and user.password is password
+              assertion.should.eql true
+              client.close()
+              next()
+    .pipe importStream client, format: 'json', objectMode: true

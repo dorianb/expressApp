@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "author": "Dorian BAGUR",
+  "scripts": {
+    "start": "node ./bin/start",
+    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register tests"
+  },
   "dependencies": {
     "coffee-script": "latest",
     "body-parser": "^1.8.4",
@@ -25,11 +29,5 @@
   "devDependencies": {
     "mocha": "latest",
     "should": "latest"
-  },
-  "scripts": {
-    "start": "node ./bin/start",
-    "import": "node ./bin/import",
-    "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script/register tests",
-    "export": "node ./bin/export"
   }
 }

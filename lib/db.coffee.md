@@ -7,6 +7,20 @@
       close: (callback) ->
         db.close callback
       users:
+        getAll: (callback) ->
+          users = {}
+          db.createReadStream
+            gt: "users:#{username}:"
+          .on 'data', (data) ->
+            [_, username, key] = data.key.split ':'
+            user = {}
+            user.username = username
+            user[key] = data.value
+            users = users
+          .on 'error', (err) ->
+            callback err
+          .on 'end', ->
+            callback null, user
         get: (username, callback) ->
           user = {}
           db.createReadStream

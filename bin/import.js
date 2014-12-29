@@ -21,7 +21,7 @@ else if(argv['format'])
       .on('end', function(){
         console.log('Importation terminée');
       })
-      .pipe(importStream(client, {format: argv['format']}));
+      .pipe(importStream(client, {format: argv['format']}, {objectMode: true}));
     }
   }
   else
@@ -39,6 +39,6 @@ else
     .on('end', function(){
       console.log('Importation terminée');
     })
-    .pipe(importStream(client, {format: 'csv'}));
+    .pipe(importStream(client, {format: 'csv'}, {objectMode: true}));
   }
 }
