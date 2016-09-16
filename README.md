@@ -1,7 +1,6 @@
 # Node.js project using express Framework
 
 This is the GROUP3 project (Dorian BAGUR, Najlaa SEDKI and Maoqiao ZHOU).
-We used coffeeScript as programmation language and MarkDown to document our code.
 
 ## Functionalities
 * provide a login formular accepting: username and email
